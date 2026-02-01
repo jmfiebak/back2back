@@ -56,7 +56,7 @@ export class GameSetupComponent {
         })),
       questionsPerPair: sizeConfig.questionsPerPair,
       numberOfRounds: sizeConfig.pairingsPerGame,
-      selectedCategories: categories!.map(c => c.id)
+      selectedCategories: categories!
     };
 
     this.gameService.createGame(gameConfig);

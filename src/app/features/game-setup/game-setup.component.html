@@ -40,7 +40,8 @@
         <div class="mb-12">
             <h4>Welche Kategorien wollt ihr spielen?</h4>
             <mat-chip-listbox multiple aria-label="category selection" formControlName="categories">
-                <mat-chip-option *ngFor="let category of availableCategories">{{ category.name }}</mat-chip-option>
+                <mat-chip-option *ngFor="let category of availableCategories" [value]="category">{{ category.name
+                    }}</mat-chip-option>
 
             </mat-chip-listbox>
         </div>
