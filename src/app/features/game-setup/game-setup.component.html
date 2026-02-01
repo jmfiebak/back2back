@@ -1,55 +1,50 @@
-<h1>Back2back2back again!</h1>
-<p>Bitte tragt eure Namen ein und dann geht's los!</p>
+<h1>Back2Back Setup</h1>
+<p>Please enter your names and let's go!</p>
 
-
-<!-- Spieler-Sektion -->
+<!-- Players Section -->
 <section class="flex flex-col py-4">
     <mat-form-field appearance="fill" *ngFor="let player of players; let i = index; trackBy: trackByIndex">
-        <mat-label>Spieler {{ i + 1 }}</mat-label>
+        <mat-label>Player {{ i + 1 }}</mat-label>
         <input matInput type="text">
         <button mat-icon-button matSuffix color="warn" (click)="removePlayer(i)" *ngIf="players.length > 2">
             <mat-icon>delete</mat-icon>
         </button>
-
     </mat-form-field>
     <button mat-raised-button color="accent" (click)="addPlayer()">
         <mat-icon>add</mat-icon>
-        Spieler hinzufügen
+        Add Player
     </button>
 </section>
 
-<!-- Einstellungen -->
+<!-- Settings -->
 <section>
-
     <mat-accordion class="example-headers-align" multi>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    Einstellungen
+                    Settings
                 </mat-panel-title>
                 <mat-panel-description>
-                    Wie lang soll die Runde gehen?
+                    How long should the round last?
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <h3>Fragen pro Paarung</h3>
-            <mat-button-toggle-group name="fragenAnzahl" aria-label="Anzahl der Fragen" class="flex w-full">
-                <mat-button-toggle value="kurz" class="flex-1">Kurz</mat-button-toggle>
-                <mat-button-toggle value="mittel" class="flex-1" checked>Mittel</mat-button-toggle>
-                <mat-button-toggle value="lang" class="flex-1">Lang</mat-button-toggle>
+            <h3>Questions per Pair</h3>
+            <mat-button-toggle-group name="questionCount" aria-label="Number of Questions" class="flex w-full">
+                <mat-button-toggle value="short" class="flex-1">Short</mat-button-toggle>
+                <mat-button-toggle value="medium" class="flex-1" checked>Medium</mat-button-toggle>
+                <mat-button-toggle value="long" class="flex-1">Long</mat-button-toggle>
             </mat-button-toggle-group>
-            <h3>Rundenanzahl</h3>
-
+            <h3>Number of Rounds</h3>
         </mat-expansion-panel>
     </mat-accordion>
-
-
 </section>
+
 <section #footer class="py-4">
     <div class="flex justify-between">
-        <button mat-button routerLink="..">Abbrechen</button>
-        <button mat-raised-button color="primary" (click)="startGame()" routerLink="/spielbrett">
+        <button mat-button routerLink="..">Cancel</button>
+        <button mat-raised-button color="primary" (click)="startGame()">
             <mat-icon>play_arrow</mat-icon>
-            Spiel starten
+            Start Game
         </button>
     </div>
 </section>
