@@ -1,0 +1,61 @@
+<ng-container *ngIf="gameView$ | async as view">
+
+  <!-- PAIRING PHASE: Show current pair -->
+  <div *ngIf="view.phase === 'pairing'" class="flex-1 flex flex-col items-center justify-center text-center p-8 gap-6">
+    <div class="text-sm opacity-70 uppercase tracking-wide">
+      Runde {{ view.roundNumber }} von {{ view.totalRounds }}
+    </div>
+
+    <h1 class="text-3xl font-bold">Nächste Paarung</h1>
+
+    <div *ngIf="view.currentPair" class="flex items-center gap-4 text-2xl my-4">
+      <span class="font-bold text-4xl">{{ view.currentPair[0].name }}</span>
+      <span class="opacity-60">&</span>
+      <span class="font-bold text-4xl">{{ view.currentPair[1].name }}</span>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="onContinue()">
+      Los geht's!
+    </button>
+  </div>
+
+  <!-- QUESTION PHASE: Show current question -->
+  <div *ngIf="view.phase === 'question'" class="flex-1 flex flex-col items-center justify-center text-center p-8 gap-6">
+    <div class="text-sm opacity-70 uppercase tracking-wide">
+      Runde {{ view.roundNumber }} | Frage {{ view.questionNumberInRound }} von {{ view.questionsPerRound }}
+    </div>
+
+    <div *ngIf="view.currentPair" class="text-base opacity-80">
+      {{ view.currentPair[0].name }} & {{ view.currentPair[1].name }}
+    </div>
+
+    <div *ngIf="view.currentQuestion" class="max-w-xl my-8">
+      <h2 class="text-2xl leading-relaxed font-normal">{{ view.currentQuestion.text }}</h2>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="onContinue()">
+      Nächste Frage
+    </button>
+  </div>
+
+  <!-- FINISHED PHASE: Game over -->
+  <div *ngIf="view.phase === 'finished'" class="flex-1 flex flex-col items-center justify-center text-center p-8 gap-6">
+    <h1 class="text-4xl font-bold">Spiel beendet!</h1>
+
+    <p class="text-lg opacity-80">
+      Ihr habt {{ view.totalRounds }} Runden mit insgesamt {{ view.totalRounds * view.questionsPerRound }} Fragen gespielt.
+    </p>
+
+    <button mat-raised-button color="primary" (click)="onEndGame()">
+      Neues Spiel starten
+    </button>
+  </div>
+
+</ng-container>
+
+<!-- Footer with exit option -->
+<div class="p-4 flex justify-center border-t border-white/10">
+  <button mat-button color="warn" (click)="onEndGame()">
+    Spiel beenden
+  </button>
+</div>
