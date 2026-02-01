@@ -1,10 +1,14 @@
+import { Category } from './category.model';
 import { Player } from './player.model';
+import { Question } from './question.model';
 
 export interface GameConfig {
     players: Player[];
     questionsPerPair: number;
     numberOfRounds: number;
-    selectedCategories: string[];
+    selectedCategories: Category[];
+    pairs?: Array<[Player, Player]>;
+    questions?: Array<Question>;
 }
 
 export type GameSize = 'short' | 'medium' | 'long';

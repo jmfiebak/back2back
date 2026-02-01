@@ -11,6 +11,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const MATERIAL_MODULES = [
   MatButtonModule,
@@ -20,7 +21,8 @@ const MATERIAL_MODULES = [
   MatChipsModule,
   MatIconModule,
   MatExpansionModule,
-  MatButtonToggleModule
+  MatButtonToggleModule,
+  ReactiveFormsModule
 ];
 
 @NgModule({

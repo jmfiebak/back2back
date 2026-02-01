@@ -1,5 +1,27 @@
-<h1>Back2Back</h1>
+<div class="flex flex-col items-center justify-between min-h-[90vh] text-center px-6 py-12">
 
-<p>Ready for Back2Back and shots?</p>
+    <!-- Titel oben, groß -->
+    <span
+        class="text-6xl mt-8 font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#9A4C95] to-[#F7AEF8]">
+        Back2Back
+    </span>
 
-<button mat-flat-button color="primary" routerLink="/game-setup">Start Game</button>
+    <!-- Spacer + Bild + Subline im unteren Bereich -->
+    <div class="flex flex-col items-center mt-auto">
+
+        <!-- Bild größer -->
+        <img src="../../../assets/images/bierdude.svg" alt="Back2Back Logo" class="w-72 h-auto mb-10">
+
+        <!-- Subline -->
+        <p class="text-xl text-white/70 font-light mb-16">
+            Bereit für Back2Back und Shots?
+        </p>
+
+        <!-- Button größer -->
+        <button mat-flat-button color="primary" routerLink="/game-setup" class="mt-8">
+            Spiel starten
+        </button>
+
+    </div>
+
+</div>

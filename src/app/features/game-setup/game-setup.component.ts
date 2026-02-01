@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { GameSize } from 'src/app/core/models/game-config.model';
+import { Category, GameService, Player } from 'src/app/core';
+import { CATEGORIES } from 'src/app/core/data/categories.data';
+import { GameConfig, GameSize, GAME_SIZE_CONFIG } from 'src/app/core/models/game-config.model';
 
 
 @Component({
@@ -10,57 +12,59 @@ import { GameSize } from 'src/app/core/models/game-config.model';
   styleUrls: ['./game-setup.component.scss']
 })
 export class GameSetupComponent {
+  availableCategories: Category[] = CATEGORIES;
   gameForm = new FormGroup({
     players: new FormArray([
       new FormControl('', Validators.required),
       new FormControl('', Validators.required),
-
     ]),
     gameSize: new FormControl<GameSize>('medium', Validators.required),
-
+    categories: new FormControl<Category[]>([], Validators.required),
   });
-  players: string[] = ['', ''];
-  questionsPerPair: number = 5;
-  numberOfRounds: number = 3;
 
-  questionsOptions = [5, 6, 7, 8, 9, 10];
-  roundsOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  constructor(private router: Router, private gameService: GameService) { }
 
-  constructor(private router: Router) { }
+  get players(): FormArray {
+    return this.gameForm.get('players') as FormArray;
+  }
 
   addPlayer() {
-    this.players.push('');
+    this.players.push(new FormControl('', Validators.required));
   }
 
   removePlayer(index: number) {
     if (this.players.length > 2) {
-      this.players.splice(index, 1);
+      this.players.removeAt(index);
     }
+  }
+
+  startGame() {
+    if (this.gameForm.invalid) {
+      console.log(this.gameForm);
+      return;
+    }
+
+    const { players, gameSize, categories } = this.gameForm.value;
+    const sizeConfig = GAME_SIZE_CONFIG[gameSize!];
+
+    const gameConfig: GameConfig = {
+      players: players!
+        .filter((name: string | null) => name?.trim())
+        .map((name: string | null, index: number) => ({
+          id: `player-${index + 1}`,
+          name: name!.trim()
+        })),
+      questionsPerPair: sizeConfig.questionsPerPair,
+      numberOfRounds: sizeConfig.pairingsPerGame,
+      selectedCategories: categories!
+    };
+
+    this.gameService.createGame(gameConfig);
+    return this.router.navigate(['/game-board']);
   }
 
   trackByIndex(index: number): number {
     return index;
   }
 
-  isValid(): boolean {
-    const validPlayers = this.players.filter(p => p.trim().length > 0);
-    return validPlayers.length >= 2;
-  }
-
-  startGame() {
-    if (!this.isValid()) {
-      return;
-    }
-
-    const validPlayers = this.players.filter(p => p.trim().length > 0);
-
-    const gameConfig = {
-      players: validPlayers,
-      questionsPerPair: this.questionsPerPair,
-      numberOfRounds: this.numberOfRounds
-    };
-
-    console.log('Game Config:', gameConfig);
-    this.router.navigate(['/game-board']);
-  }
 }

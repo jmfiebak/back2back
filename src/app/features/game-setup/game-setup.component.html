@@ -1,50 +1,61 @@
 <h1>Back2Back Setup</h1>
-<p>Namen rein und los geht's!</p>
+<h4>Namen rein und los geht's!</h4>
 
-<!-- Players Section -->
-<section class="flex flex-col py-4">
-    <mat-form-field appearance="fill" *ngFor="let player of players; let i = index; trackBy: trackByIndex">
-        <mat-label>Spieler {{ i + 1 }}</mat-label>
-        <input matInput type="text">
-        <button mat-icon-button matSuffix color="warn" (click)="removePlayer(i)" *ngIf="players.length > 2">
-            <mat-icon>delete</mat-icon>
+<!-- Form -->
+<form [formGroup]="gameForm">
+
+    <!-- Players Section -->
+    <section formArrayName="players" class="flex flex-col mb-12">
+        <mat-form-field appearance="fill"
+            *ngFor="let control of players.controls; let i = index; trackBy: trackByIndex">
+            <mat-label>Spieler {{ i + 1 }}</mat-label>
+            <input matInput type="text" [formControlName]="i" placeholder="Name eingeben" />
+            <button mat-icon-button matSuffix color="warn" (click)="removePlayer(i)" *ngIf="players.length > 2">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-form-field>
+        <button mat-raised-button color="accent" (click)="addPlayer()">
+            <mat-icon>add</mat-icon>
+            Spieler hinzufügen
         </button>
-    </mat-form-field>
-    <button mat-raised-button color="accent" (click)="addPlayer()">
-        <mat-icon>add</mat-icon>
-        Spieler hinzufügen
-    </button>
-</section>
+    </section>
 
-<!-- Settings -->
-<section>
-    <mat-accordion class="example-headers-align" multi>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Einstellungen
-                </mat-panel-title>
-                <mat-panel-description>
-                    Wie lange soll die Runde dauern?
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <h3>Fragen pro Paar</h3>
-            <mat-button-toggle-group name="questionCount" aria-label="Number of Questions" class="flex w-full">
+    <!-- Settings -->
+    <section>
+        <!-- <mat-accordion class="example-headers-align" multi>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Einstellungen
+                    </mat-panel-title>
+                </mat-expansion-panel-header> -->
+        <div class="mb-12">
+            <h4>Wie lang soll die Runde gehen?</h4>
+            <mat-button-toggle-group formControlName="gameSize" aria-label="Number of Questions" class="flex w-full">
                 <mat-button-toggle value="short" class="flex-1">Kurz</mat-button-toggle>
-                <mat-button-toggle value="medium" class="flex-1" checked>Mittel</mat-button-toggle>
+                <mat-button-toggle value="medium" class="flex-1">Mittel</mat-button-toggle>
                 <mat-button-toggle value="long" class="flex-1">Lang</mat-button-toggle>
             </mat-button-toggle-group>
-            <h3>Anzahl der Runden</h3>
-        </mat-expansion-panel>
-    </mat-accordion>
-</section>
+        </div>
+        <div class="mb-12">
+            <h4>Welche Kategorien wollt ihr spielen?</h4>
+            <mat-chip-listbox multiple aria-label="category selection" formControlName="categories">
+                <mat-chip-option *ngFor="let category of availableCategories" [value]="category">{{ category.name
+                    }}</mat-chip-option>
 
-<section #footer class="py-4">
-    <div class="flex justify-between">
-        <button mat-button routerLink="..">Abbrechen</button>
-        <button mat-raised-button color="primary" (click)="startGame()">
-            <mat-icon>play_arrow</mat-icon>
-            Spiel starten
-        </button>
-    </div>
-</section>
+            </mat-chip-listbox>
+        </div>
+
+        <!-- </mat-expansion-panel>
+        </mat-accordion> -->
+    </section>
+
+    <section #footer class="py-4">
+        <div class="flex justify-between">
+            <button mat-button routerLink="..">Abbrechen</button>
+            <button mat-raised-button color="primary" (click)="startGame()">
+                <mat-icon>play_arrow</mat-icon>
+                Spiel starten
+            </button>
+        </div>
+    </section>
