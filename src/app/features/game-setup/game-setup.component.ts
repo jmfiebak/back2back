@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Category } from 'src/app/core';
+import { Category, GameService, Player } from 'src/app/core';
 import { CATEGORIES } from 'src/app/core/data/categories.data';
-import { GameSize } from 'src/app/core/models/game-config.model';
+import { GameConfig, GameSize, GAME_SIZE_CONFIG } from 'src/app/core/models/game-config.model';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class GameSetupComponent {
     categories: new FormControl<Category[]>([], Validators.required),
   });
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private gameService: GameService) { }
 
   get players(): FormArray {
     return this.gameForm.get('players') as FormArray;
@@ -40,19 +40,31 @@ export class GameSetupComponent {
 
   startGame() {
     if (this.gameForm.invalid) {
-      console.log((this.gameForm));
-
-      return
+      console.log(this.gameForm);
+      return;
     }
 
-    const { players, gameSize } = this.gameForm.value;
-    // → GameService aufrufen
+    const { players, gameSize, categories } = this.gameForm.value;
+    const sizeConfig = GAME_SIZE_CONFIG[gameSize!];
+
+    const gameConfig: GameConfig = {
+      players: players!
+        .filter((name: string | null) => name?.trim())
+        .map((name: string | null, index: number) => ({
+          id: `player-${index + 1}`,
+          name: name!.trim()
+        })),
+      questionsPerPair: sizeConfig.questionsPerPair,
+      numberOfRounds: sizeConfig.pairingsPerGame,
+      selectedCategories: categories!.map(c => c.id)
+    };
+
+    this.gameService.createGame(gameConfig);
     return this.router.navigate(['/game-board']);
   }
 
   trackByIndex(index: number): number {
     return index;
   }
-
 
 }
