@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { GameSize } from 'src/app/core/models/game-config.model';
+
 
 @Component({
   selector: 'app-game-setup',
@@ -7,6 +10,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./game-setup.component.scss']
 })
 export class GameSetupComponent {
+  gameForm = new FormGroup({
+    players: new FormArray([
+      new FormControl('', Validators.required),
+      new FormControl('', Validators.required),
+
+    ]),
+    gameSize: new FormControl<GameSize>('medium', Validators.required),
+
+  });
   players: string[] = ['', ''];
   questionsPerPair: number = 5;
   numberOfRounds: number = 3;
