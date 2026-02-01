@@ -1,0 +1,195 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// ===================================
+// CUSTOM COLOR PALETTES
+// ===================================
+
+// Primary: #9A4C95 (Lila/Pink)
+$custom-primary-palette: (
+    50: #f3e5f2,
+    100: #e1bfde,
+    200: #cd95c9,
+    300: #b96ab3,
+    400: #aa4aa2,
+    500: #9a4c95,
+    // Deine Hauptfarbe
+    600: #8e4589,
+    700: #7f3c7a,
+    800: #70336c,
+    900: #542453,
+    A100: #ff9cff,
+    A200: #ff69ff,
+    A400: #ff36ff,
+    A700: #ff1cff,
+    contrast: (50: rgba(black, 0.87),
+        100: rgba(black, 0.87),
+        200: rgba(black, 0.87),
+        300: white,
+        400: white,
+        500: white,
+        600: white,
+        700: white,
+        800: white,
+        900: white,
+        A100: rgba(black, 0.87),
+        A200: white,
+        A400: white,
+        A700: white,
+    )
+);
+
+// Accent 1: #F7AEF8 (Hell-Pink)
+$custom-accent-palette: (
+    50: #fef5fe,
+    100: #fce6fd,
+    200: #fad5fb,
+    300: #f7c4f9,
+    400: #f5b8f8,
+    500: #f7aef8,
+    // Deine Accent-Farbe
+    600: #f59ef6,
+    700: #f38bf4,
+    800: #f179f2,
+    900: #ee58ef,
+    A100: #ffffff,
+    A200: #ffffff,
+    A400: #ffdbff,
+    A700: #ffc2ff,
+    contrast: (50: rgba(black, 0.87),
+        100: rgba(black, 0.87),
+        200: rgba(black, 0.87),
+        300: rgba(black, 0.87),
+        400: rgba(black, 0.87),
+        500: rgba(black, 0.87),
+        600: rgba(black, 0.87),
+        700: rgba(black, 0.87),
+        800: rgba(black, 0.87),
+        900: rgba(black, 0.87),
+        A100: rgba(black, 0.87),
+        A200: rgba(black, 0.87),
+        A400: rgba(black, 0.87),
+        A700: rgba(black, 0.87),
+    )
+);
+
+// Secondary/Warn: #72DDF7 (Cyan/Türkis)
+$custom-warn-palette: (
+    50: #e9f8fd,
+    100: #c8eefb,
+    200: #a3e3f8,
+    300: #7ed8f5,
+    400: #62cff3,
+    500: #72ddf7,
+    // Deine Secondary-Farbe (als Warn verwendet)
+    600: #42bdf0,
+    700: #30b4ed,
+    800: #1eabeb,
+    900: #009ce6,
+    A100: #ffffff,
+    A200: #d4f2ff,
+    A400: #a1e4ff,
+    A700: #87dcff,
+    contrast: (50: rgba(black, 0.87),
+        100: rgba(black, 0.87),
+        200: rgba(black, 0.87),
+        300: rgba(black, 0.87),
+        400: rgba(black, 0.87),
+        500: rgba(black, 0.87),
+        600: rgba(black, 0.87),
+        700: rgba(black, 0.87),
+        800: white,
+        900: white,
+        A100: rgba(black, 0.87),
+        A200: rgba(black, 0.87),
+        A400: rgba(black, 0.87),
+        A700: rgba(black, 0.87),
+    )
+);
+
+// ===================================
+// THEME DEFINITION
+// ===================================
+
+$my-primary: mat.define-palette($custom-primary-palette, 500);
+$my-accent: mat.define-palette($custom-accent-palette, 500);
+$my-warn: mat.define-palette($custom-warn-palette, 500);
+
+// Dark Theme
+$dark-theme: mat.define-dark-theme((color: (primary: $my-primary,
+                accent: $my-accent,
+                warn: $my-warn,
+            ),
+            typography: mat.define-typography-config($font-family: 'Roboto, "Helvetica Neue", sans-serif',
+            ),
+            density: 0,
+        ));
+
+// Theme anwenden
+@include mat.all-component-themes($dark-theme);
+
+// ===================================
+// CUSTOM DARK BACKGROUND COLORS
+// ===================================
+
+body {
+    // Noch dunklerer Hintergrund für mehr Kontrast
+    --mdc-theme-surface: #1a1a1a;
+    background-color: #121212;
+    color: rgba(255, 255, 255, 0.87);
+}
+
+.mat-mdc-card {
+    background-color: #1e1e1e !important;
+}
+
+.mat-toolbar {
+    background-color: #1a1a1a !important;
+}
+
+// ===================================
+// GLOBAL STYLES
+// ===================================
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+// App-Container
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+// Scrollbar Styling (optional, für Dark Mode)
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #9a4c95;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #aa4aa2;
+}

@@ -1,0 +1,55 @@
+<h1>Back2back2back again!</h1>
+<p>Bitte tragt eure Namen ein und dann geht's los!</p>
+
+
+<!-- Spieler-Sektion -->
+<section class="flex flex-col py-4">
+    <mat-form-field appearance="fill" *ngFor="let player of players; let i = index; trackBy: trackByIndex">
+        <mat-label>Spieler {{ i + 1 }}</mat-label>
+        <input matInput type="text">
+        <button mat-icon-button matSuffix color="warn" (click)="removePlayer(i)" *ngIf="players.length > 2">
+            <mat-icon>delete</mat-icon>
+        </button>
+
+    </mat-form-field>
+    <button mat-raised-button color="accent" (click)="addPlayer()">
+        <mat-icon>add</mat-icon>
+        Spieler hinzufügen
+    </button>
+</section>
+
+<!-- Einstellungen -->
+<section>
+
+    <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Einstellungen
+                </mat-panel-title>
+                <mat-panel-description>
+                    Wie lang soll die Runde gehen?
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <h3>Fragen pro Paarung</h3>
+            <mat-button-toggle-group name="fragenAnzahl" aria-label="Anzahl der Fragen" class="flex w-full">
+                <mat-button-toggle value="kurz" class="flex-1">Kurz</mat-button-toggle>
+                <mat-button-toggle value="mittel" class="flex-1" checked>Mittel</mat-button-toggle>
+                <mat-button-toggle value="lang" class="flex-1">Lang</mat-button-toggle>
+            </mat-button-toggle-group>
+            <h3>Rundenanzahl</h3>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+
+
+</section>
+<section #footer class="py-4">
+    <div class="flex justify-between">
+        <button mat-button routerLink="..">Abbrechen</button>
+        <button mat-raised-button color="primary" (click)="startGame()" routerLink="/spielbrett">
+            <mat-icon>play_arrow</mat-icon>
+            Spiel starten
+        </button>
+    </div>
+</section>
