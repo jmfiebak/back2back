@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
 
 @Injectable({
@@ -7,39 +6,24 @@ import { Preferences } from '@capacitor/preferences';
 })
 export class StorageService {
 
-  private get isNative(): boolean {
-    return Capacitor.isNativePlatform();
-  }
-
   /**
-   * Saves data to device storage (native) or localStorage (web)
+   * Saves data to storage
    */
   async set<T>(key: string, value: T): Promise<void> {
     try {
-      const serialized = JSON.stringify(value);
-
-      if (this.isNative) {
-        await Preferences.set({ key, value: serialized });
-      } else {
-        localStorage.setItem(key, serialized);
-      }
+      await Preferences.set({ key, value: JSON.stringify(value) });
     } catch (error) {
       console.error('Error saving to storage', error);
     }
   }
 
   /**
-   * Loads data from device storage (native) or localStorage (web)
+   * Loads data from storage
    */
   async get<T>(key: string): Promise<T | null> {
     try {
-      if (this.isNative) {
-        const { value } = await Preferences.get({ key });
-        return value ? JSON.parse(value) as T : null;
-      } else {
-        const item = localStorage.getItem(key);
-        return item ? JSON.parse(item) as T : null;
-      }
+      const { value } = await Preferences.get({ key });
+      return value ? JSON.parse(value) as T : null;
     } catch (error) {
       console.error('Error loading from storage', error);
       return null;
@@ -51,11 +35,7 @@ export class StorageService {
    */
   async remove(key: string): Promise<void> {
     try {
-      if (this.isNative) {
-        await Preferences.remove({ key });
-      } else {
-        localStorage.removeItem(key);
-      }
+      await Preferences.remove({ key });
     } catch (error) {
       console.error('Error removing from storage', error);
     }
@@ -66,11 +46,7 @@ export class StorageService {
    */
   async clear(): Promise<void> {
     try {
-      if (this.isNative) {
-        await Preferences.clear();
-      } else {
-        localStorage.clear();
-      }
+      await Preferences.clear();
     } catch (error) {
       console.error('Error clearing storage', error);
     }
