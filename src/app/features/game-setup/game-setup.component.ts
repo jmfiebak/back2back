@@ -38,7 +38,7 @@ export class GameSetupComponent {
     }
   }
 
-  startGame() {
+  async startGame() {
     if (this.gameForm.invalid) {
       console.log(this.gameForm);
       return;
@@ -59,7 +59,7 @@ export class GameSetupComponent {
       selectedCategories: categories!
     };
 
-    this.gameService.createGame(gameConfig);
+    await this.gameService.createGame(gameConfig);
     return this.router.navigate(['/game-board']);
   }
 
