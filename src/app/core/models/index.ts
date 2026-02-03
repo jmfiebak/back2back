@@ -3,3 +3,4 @@ export * from './game-config.model';
 export * from './question.model';
 export * from './game-session.model';
 export * from './category.model';
+export * from './shop.model';

@@ -24,6 +24,7 @@
     "@capacitor/core": "^8.0.2",
     "@capacitor/ios": "^8.0.2",
     "@capacitor/preferences": "^8.0.0",
+    "@revenuecat/purchases-capacitor": "^12.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
