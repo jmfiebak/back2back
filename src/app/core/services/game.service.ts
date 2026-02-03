@@ -19,7 +19,7 @@ export class GameService {
     /**
      * Creates a new game config and saves it
      */
-    createGame(formData: GameConfig): void {
+    async createGame(formData: GameConfig): Promise<void> {
         const configWithTimestamp = {
             ...formData,
             pairs: this.generatePairs(formData.players, formData.numberOfRounds),
@@ -27,7 +27,7 @@ export class GameService {
             createdAt: new Date()
         };
 
-        this.storage.set(this.STORAGE_KEY, configWithTimestamp);
+        await this.storage.set(this.STORAGE_KEY, configWithTimestamp);
         this.gameConfigSubject.next(configWithTimestamp);
 
         console.log('Game Config saved:', configWithTimestamp);
@@ -36,8 +36,8 @@ export class GameService {
     /**
      * Loads the current game config from storage
      */
-    loadConfig(): GameConfig | null {
-        const config = this.storage.get<GameConfig>(this.STORAGE_KEY);
+    async loadConfig(): Promise<GameConfig | null> {
+        const config = await this.storage.get<GameConfig>(this.STORAGE_KEY);
         this.gameConfigSubject.next(config);
         return config;
     }
@@ -52,15 +52,15 @@ export class GameService {
     /**
      * Clears the current game config
      */
-    clearConfig(): void {
-        this.storage.remove(this.STORAGE_KEY);
+    async clearConfig(): Promise<void> {
+        await this.storage.remove(this.STORAGE_KEY);
         this.gameConfigSubject.next(null);
     }
 
     /**
      * Checks if an active game exists
      */
-    hasActiveGame(): boolean {
+    async hasActiveGame(): Promise<boolean> {
         return this.storage.has(this.STORAGE_KEY);
     }
 
