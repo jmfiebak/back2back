@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Back2Back</string>
+    <string name="title_activity_main">Back2Back</string>
+    <string name="package_name">de.jmfiebak.back2back</string>
+    <string name="custom_url_scheme">de.jmfiebak.back2back</string>
+</resources>
