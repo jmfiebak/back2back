@@ -22,16 +22,17 @@ export class GameBoardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Start the game session when entering the game board
-    this.sessionService.startSession();
+    // Check if we have a valid session
+    const currentSession = this.sessionService.getCurrentSession();
+    if (!currentSession) {
+      // Try to start a new session
+      this.sessionService.startSession();
 
-    // Redirect if no game config exists
-    this.gameView$.pipe(takeUntil(this.destroy$)).subscribe(view => {
-      if (view === null && !this.sessionService.getCurrentSession()) {
-        // No session could be started (no config) - redirect to setup
+      // If still no session (no config), redirect to setup
+      if (!this.sessionService.getCurrentSession()) {
         this.router.navigate(['/game-setup']);
       }
-    });
+    }
   }
 
   ngOnDestroy(): void {

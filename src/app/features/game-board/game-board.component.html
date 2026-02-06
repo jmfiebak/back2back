@@ -7,7 +7,7 @@
     </div>
 
     <h1 class="text-3xl font-bold">Nächste Paarung</h1>
-
+    <img src="../../../assets/images/sektbuddies.svg" alt="">
     <div *ngIf="view.currentPair" class="flex items-center gap-4 text-2xl my-4">
       <span class="font-bold text-4xl">{{ view.currentPair[0].name }}</span>
       <span class="opacity-60">&</span>
@@ -42,8 +42,11 @@
   <div *ngIf="view.phase === 'finished'" class="flex-1 flex flex-col items-center justify-center text-center p-8 gap-6">
     <h1 class="text-4xl font-bold">Spiel beendet!</h1>
 
+    <img src="../../../assets/images/bottledude.svg" alt="">
+
     <p class="text-lg opacity-80">
-      Ihr habt {{ view.totalRounds }} Runden mit insgesamt {{ view.totalRounds * view.questionsPerRound }} Fragen gespielt.
+      Ihr habt {{ view.totalRounds }} Runden mit insgesamt {{ view.totalRounds * view.questionsPerRound }} Fragen
+      gespielt.
     </p>
 
     <button mat-raised-button color="primary" (click)="onEndGame()">
